@@ -31,16 +31,17 @@ import com.example.yulbo.ui.model.ScheduleItem
 @Composable
 fun YulboBottomAppBar(
     navigateToSchedule: () -> Unit,
-    navigateToCandidates: () -> Unit
+    navigateToCandidates: () -> Unit,
+    activeItem: String
 ) {
     NavigationBar {
         NavigationBarItem(
-            selected = true,
+            selected = activeItem == "schedule",
             onClick = { navigateToSchedule() },
             icon = { Icon(Icons.Filled.DateRange, null)},
             label = { Text(text = "schedule") })
         NavigationBarItem(
-            selected = true,
+            selected = activeItem == "candidates",
             onClick = { navigateToCandidates() },
             icon = { Icon(Icons.Filled.Notifications, null)},
             label = { Text(text = "candidates") })
@@ -77,7 +78,8 @@ fun ScheduleScreen(
                 },
                 navigateToSchedule = {
                     navigateToSchedule()
-                }
+                },
+                activeItem = "schedule"
             )
         }
     ) { innerPadding ->

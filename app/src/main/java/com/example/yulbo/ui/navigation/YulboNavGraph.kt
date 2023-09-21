@@ -45,12 +45,16 @@ fun YulboNavHost(
         }
         composable(route = "create") {
             CreateScreen(
-                navigateToSchedule = {navController.navigate("schedule")}
+                navigateToSchedule = {navController.navigate("schedule")},
+                createSchedule =  {smonth, sday, shour, sminute, emonth, eday, ehour, eminute, title ->
+                    yulboViewModel.addSchedule(
+                        smonth, sday, shour, sminute, emonth, eday, ehour, eminute, title
+                    )
+                }
             )
         }
         composable(route = "candidates") {
             CandidatesScreen(
-                candidateItems = yulboViewModel.uiState.collectAsState().value.candidateItems,
                 navigateToCandidates = {
                     navController.navigate("candidates")
                 },

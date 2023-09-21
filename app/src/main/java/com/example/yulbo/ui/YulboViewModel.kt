@@ -1,7 +1,6 @@
 package com.example.yulbo.ui
 
 import androidx.lifecycle.ViewModel
-import com.example.yulbo.ui.model.CandidateItem
 import com.example.yulbo.ui.model.ScheduleItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -11,48 +10,71 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 class YulboViewModel : ViewModel() {
-    private val _uiState = MutableStateFlow(YulboUiState(
-        scheduleItems = listOf(
-            ScheduleItem(
-                id = UUID.randomUUID().toString(),
-                startDatetime = LocalDateTime.of(2023, 8, 21, 12, 0),
-                endDateTime = LocalDateTime.of(2023, 8, 21, 13, 0),
-                isConfirmed = false
-            ),
-            ScheduleItem(
-                id = UUID.randomUUID().toString(),
-                startDatetime = LocalDateTime.of(2023, 8, 21, 14, 0),
-                endDateTime = LocalDateTime.of(2023, 8, 21, 15, 0),
-                isConfirmed = true
-            ),
-        ),
-        candidateItems = listOf(
-            CandidateItem(
-                id = UUID.randomUUID().toString(),
-                partnerUsername = "佐藤さん",
-                startDatetime = LocalDateTime.of(2023, 8, 21, 14, 0),
-                endDatetime = LocalDateTime.of(2023, 8, 21, 15, 0)
-            )
-        )
-    ))
-    val uiState: StateFlow<YulboUiState> = _uiState.asStateFlow()
-    
-    fun addSchedule() {
-        val newScheduleItem = ScheduleItem(
+    private val scheduleItems = mutableListOf<ScheduleItem>(
+        ScheduleItem(
             id = UUID.randomUUID().toString(),
+            userId = 1,
+            startDatetime = LocalDateTime.of(2023, 8, 21, 12, 0),
+            endDateTime = LocalDateTime.of(2023, 8, 21, 13, 0),
+            title = "飲み募",
+            isConfirmed = false
+        ),
+        ScheduleItem(
+            id = UUID.randomUUID().toString(),
+            userId = 1,
             startDatetime = LocalDateTime.of(2023, 8, 21, 14, 0),
-            endDateTime = LocalDateTime.of(2023, 8, 21, 14, 30),
+            endDateTime = LocalDateTime.of(2023, 8, 21, 15, 0),
+            title = "沖縄行きたい",
+            isConfirmed = false
+        ),
+        ScheduleItem(
+            id = UUID.randomUUID().toString(),
+            userId = 2,
+            startDatetime = LocalDateTime.of(2023, 8, 21, 14, 0),
+            endDateTime = LocalDateTime.of(2023, 8, 21, 15, 0),
+            title = "南の島に行きたい",
             isConfirmed = false
         )
+    )
+
+    private val _uiState = MutableStateFlow(YulboUiState(
+        scheduleItems = findMyScheduleItems()
+    ))
+    val uiState: StateFlow<YulboUiState> = _uiState.asStateFlow()
+
+    fun addSchedule(
+        smonth: Int,
+        sday: Int,
+        shour: Int,
+        sminute: Int,
+        emonth: Int,
+        eday: Int,
+        ehour: Int,
+        eminute: Int,
+        title: String
+    ) {
+        val newScheduleItem = ScheduleItem(
+            id = UUID.randomUUID().toString(),
+            userId = 1,
+            startDatetime = LocalDateTime.of(2023, smonth, sday, shour, sminute),
+            endDateTime = LocalDateTime.of(2023, emonth, eday, ehour, eminute),
+            title = title,
+            isConfirmed = false
+        )
+        scheduleItems.add(newScheduleItem)
         _uiState.update { currentState ->
             currentState.copy(
-                scheduleItems = currentState.scheduleItems.plus(newScheduleItem)
+                scheduleItems = findMyScheduleItems()
             )
         }
+    }
+
+    private fun findMyScheduleItems(): List<ScheduleItem> {
+        return scheduleItems.filter { scheduleItem -> scheduleItem.userId == 1 }
     }
 }
 
 data class YulboUiState(
     var scheduleItems: List<ScheduleItem> = listOf(),
-    var candidateItems: List<CandidateItem> = listOf()
+    var candidateItems: List<ScheduleItem> = listOf()
 )
