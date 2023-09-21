@@ -1,6 +1,7 @@
 package com.example.yulbo.ui
 
 import androidx.lifecycle.ViewModel
+import com.example.yulbo.ui.model.CandidateItem
 import com.example.yulbo.ui.model.ScheduleItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -10,7 +11,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 class YulboViewModel : ViewModel() {
-    private val scheduleItems = mutableListOf<ScheduleItem>(
+    private val scheduleItems = mutableListOf(
         ScheduleItem(
             id = UUID.randomUUID().toString(),
             userId = 1,
@@ -38,7 +39,8 @@ class YulboViewModel : ViewModel() {
     )
 
     private val _uiState = MutableStateFlow(YulboUiState(
-        scheduleItems = findMyScheduleItems()
+        scheduleItems = findMyScheduleItems(),
+        candidateItems = calculateCandidateItems()
     ))
     val uiState: StateFlow<YulboUiState> = _uiState.asStateFlow()
 
@@ -72,9 +74,19 @@ class YulboViewModel : ViewModel() {
     private fun findMyScheduleItems(): List<ScheduleItem> {
         return scheduleItems.filter { scheduleItem -> scheduleItem.userId == 1 }
     }
+
+    private fun calculateCandidateItems(): List<CandidateItem> {
+        // todo: implement logic
+        return listOf(
+            CandidateItem(
+                myScheduleItem = scheduleItems[0],
+                matchedScheduleItem = scheduleItems[2]
+            )
+        )
+    }
 }
 
 data class YulboUiState(
     var scheduleItems: List<ScheduleItem> = listOf(),
-    var candidateItems: List<ScheduleItem> = listOf()
+    var candidateItems: List<CandidateItem> = listOf()
 )

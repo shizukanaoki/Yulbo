@@ -6,9 +6,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.yulbo.ui.YulboViewModel
+import com.example.yulbo.ui.screens.CandidateDetailsScreen
 import com.example.yulbo.ui.screens.CandidatesScreen
 import com.example.yulbo.ui.screens.CreateScreen
 import com.example.yulbo.ui.screens.ScheduleScreen
@@ -55,16 +58,34 @@ fun YulboNavHost(
         }
         composable(route = "candidates") {
             CandidatesScreen(
+                candidateItems = yulboViewModel.uiState.collectAsState().value.candidateItems,
                 navigateToCandidates = {
                     navController.navigate("candidates")
                 },
                 navigateToSchedule = {
                     navController.navigate("schedule")
+                },
+                navigateToCandidateDetails = {
+                    navController.navigate("candidate_details/${it}")
                 }
+
             )
         }
-        composable(route = "confirm") {
-            Text(text = "confirm")
+        composable(
+            route = "candidate_details/{itemId}",
+            arguments = listOf(navArgument("itemId") {
+                type = NavType.StringType
+            })
+        ) { backStackEntry ->
+            val itemId = backStackEntry.arguments?.getString("itemId")
+            if (itemId == null) {
+                Text(text = "invalid itemId")
+            } else {
+                CandidateDetailsScreen(
+                    itemId = itemId,
+                    navigateToSchedule = { navController.navigate("schedule") }
+                )
+            }
         }
     }
 }
