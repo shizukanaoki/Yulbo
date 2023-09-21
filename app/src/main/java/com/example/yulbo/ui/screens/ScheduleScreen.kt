@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
@@ -63,39 +65,44 @@ fun ScheduleScreen(
             )
         }
     ) { innerPadding ->
-        Column {
-            Row() {
-                Card (modifier = Modifier
-                    .weight(1f)
-                    .padding(20.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = Color(0x90e3f2fd)
-                    ),
-                    shape = MaterialTheme.shapes.medium
-                ){
-                    Text(
-                        text = "9/21 9:00 ~ 20:00",
-                        fontSize = 35.sp,
-                        modifier =  Modifier.align(Alignment.CenterHorizontally)
-                    )
+        Column (
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+        ){
+            scheduleItems.forEach { scheduleItem ->
+                var cardColor: Color
+                if (scheduleItem.isConfirmed) {
+                    cardColor = Color(0x9082b1ff)
+                } else {
+                    cardColor = Color(0x90e3f2fd)
                 }
-            }
-            Row() {
-                Card (modifier = Modifier
-                    .weight(1f)
-                    .padding(20.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = Color(0x9082b1ff)
-                    ),
-                    shape = MaterialTheme.shapes.medium
-
-                ) {
-                    Text(
-                        text = "9/21 21:00 ~ 22:00",
-                        fontSize = 35.sp,
-                        modifier =  Modifier.align(Alignment.CenterHorizontally)
-                    )
-
+                Row {
+                    Card (modifier = Modifier
+                        .weight(1f)
+                        .padding(20.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = cardColor
+                        ),
+                        shape = MaterialTheme.shapes.medium
+                    ){
+                        val startMonth = scheduleItem.startDatetime.monthValue.toString().padStart(2, '0')
+                        val startDay = scheduleItem.startDatetime.dayOfMonth.toString().padStart(2, '0')
+                        val startHour = scheduleItem.startDatetime.hour.toString().padStart(2, '0')
+                        val startMin = scheduleItem.startDatetime.minute.toString().padStart(2, '0')
+                        Text(
+                            text = "$startMonth" + "/" + "$startDay" + " " +"$startHour" + ":" + "$startMin",
+                            fontSize = 35.sp,
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+                        val endMonth = scheduleItem.endDateTime.monthValue.toString().padStart(2, '0')
+                        val endDay = scheduleItem.endDateTime.dayOfMonth.toString().padStart(2, '0')
+                        val endHour = scheduleItem.endDateTime.hour.toString().padStart(2, '0')
+                        val endMin = scheduleItem.endDateTime.minute.toString().padStart(2, '0')
+                        Text(text = "〜"+"$endMonth"+"/"+"$endDay"+" "+"$endHour"+":"+"$endMin",
+                            fontSize = 35.sp,
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+                    }
                 }
             }
         }
