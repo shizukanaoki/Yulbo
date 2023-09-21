@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.yulbo.ui.screens.ScheduleItem
+import com.example.yulbo.ui.screens.CreateScreen
 import com.example.yulbo.ui.screens.ScheduleScreen
 import java.time.LocalDateTime
 
@@ -53,9 +54,6 @@ fun YulboNavHost(
         }
         composable(route = "confirm") {
             Text(text = "confirm")
-        }
-        composable(route = "create") {
-            Text(text = "create")
         }
     }
 }
