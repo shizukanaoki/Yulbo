@@ -17,7 +17,7 @@ fun YulboNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "start",
+        startDestination = "schedule",
         modifier = modifier
     ) {
         composable(route = "start") {
