@@ -3,21 +3,25 @@ package com.example.yulbo.ui.navigation
 import StartScreen
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.yulbo.ui.screens.ScheduleItem
+import androidx.navigation.navArgument
+import com.example.yulbo.ui.YulboViewModel
+import com.example.yulbo.ui.screens.CandidateDetailsScreen
+import com.example.yulbo.ui.screens.CandidatesScreen
 import com.example.yulbo.ui.screens.CreateScreen
 import com.example.yulbo.ui.screens.ScheduleScreen
-import java.time.LocalDateTime
-
 
 @Composable
 fun YulboNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
+    val yulboViewModel: YulboViewModel = YulboViewModel()
     NavHost(
         navController = navController,
         startDestination = "schedule",
@@ -30,62 +34,58 @@ fun YulboNavHost(
         }
         composable(route = "schedule") {
             ScheduleScreen(
-                scheduleItems = listOf(
-                    ScheduleItem(
-                        startDatetime = LocalDateTime.of(2023, 8, 21, 12, 0),
-                        endDateTime = LocalDateTime.of(2023, 8, 21, 13, 0),
-                        isConfirmed = false
-                    ),
-                    ScheduleItem(
-                        startDatetime = LocalDateTime.of(2023, 8, 21, 14, 0),
-                        endDateTime = LocalDateTime.of(2023, 8, 21, 15, 0),
-                        isConfirmed = true
-                    ),
-                    ScheduleItem(
-                        startDatetime = LocalDateTime.of(2023, 8, 21, 12, 0),
-                        endDateTime = LocalDateTime.of(2023, 8, 21, 13, 0),
-                        isConfirmed = false
-                    ),
-                    ScheduleItem(
-                        startDatetime = LocalDateTime.of(2023, 8, 21, 14, 0),
-                        endDateTime = LocalDateTime.of(2023, 8, 21, 15, 0),
-                        isConfirmed = true
-                    ),
-                    ScheduleItem(
-                        startDatetime = LocalDateTime.of(2023, 8, 21, 12, 0),
-                        endDateTime = LocalDateTime.of(2023, 8, 21, 13, 0),
-                        isConfirmed = false
-                    ),
-                    ScheduleItem(
-                        startDatetime = LocalDateTime.of(2023, 8, 21, 14, 0),
-                        endDateTime = LocalDateTime.of(2023, 8, 21, 15, 0),
-                        isConfirmed = true
-                    ),
-                    ScheduleItem(
-                        startDatetime = LocalDateTime.of(2023, 8, 21, 12, 0),
-                        endDateTime = LocalDateTime.of(2023, 8, 21, 13, 0),
-                        isConfirmed = false
-                    ),
-                    ScheduleItem(
-                        startDatetime = LocalDateTime.of(2023, 8, 21, 14, 0),
-                        endDateTime = LocalDateTime.of(2023, 8, 21, 15, 0),
-                        isConfirmed = true
-                    ),
-                )
-            ){
-                navController.navigate("create")
-            }
+                scheduleItems = yulboViewModel.uiState.collectAsState().value.scheduleItems,
+                navigateToCreate = {
+                    navController.navigate("create")
+                },
+                navigateToCandidates = {
+                    navController.navigate("candidates")
+                },
+                navigateToSchedule = {
+                    navController.navigate("schedule")
+                }
+            )
         }
         composable(route = "create") {
             CreateScreen(
-                navigateToSchedule = {navController.navigate("schedule")}
+                navigateToSchedule = {navController.navigate("schedule")},
+                createSchedule =  {smonth, sday, shour, sminute, emonth, eday, ehour, eminute, title ->
+                    yulboViewModel.addSchedule(
+                        smonth, sday, shour, sminute, emonth, eday, ehour, eminute, title
+                    )
+                }
             )
         }
         composable(route = "candidates") {
-            Text(text = "candidates")
+            CandidatesScreen(
+                candidateItems = yulboViewModel.uiState.collectAsState().value.candidateItems,
+                navigateToCandidates = {
+                    navController.navigate("candidates")
+                },
+                navigateToSchedule = {
+                    navController.navigate("schedule")
+                },
+                navigateToCandidateDetails = {
+                    navController.navigate("candidate_details/${it}")
+                }
+
+            )
         }
-        composable(route = "confirm") {
-            Text(text = "confirm")
+        composable(
+            route = "candidate_details/{itemId}",
+            arguments = listOf(navArgument("itemId") {
+                type = NavType.StringType
+            })
+        ) { backStackEntry ->
+            val itemId = backStackEntry.arguments?.getString("itemId")
+            if (itemId == null) {
+                Text(text = "invalid itemId")
+            } else {
+                CandidateDetailsScreen(
+                    itemId = itemId,
+                    navigateToSchedule = { navController.navigate("schedule") }
+                )
+            }
         }
     }
 }
