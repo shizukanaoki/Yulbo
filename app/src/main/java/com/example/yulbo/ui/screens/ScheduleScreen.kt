@@ -1,7 +1,6 @@
 package com.example.yulbo.ui.screens
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -14,6 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import java.time.LocalDateTime
 
 @Composable
 fun YulboBottomAppBar(
@@ -31,6 +31,7 @@ fun YulboBottomAppBar(
 @Composable
 fun ScheduleScreen(
     modifier: Modifier = Modifier,
+    scheduleItems: List<ScheduleItem>,
     navigateToCreate: () -> Unit,
 ) {
     Scaffold(
@@ -53,6 +54,12 @@ fun ScheduleScreen(
             )
         }
     ) { innerPadding ->
-        Text(text = "schedule screen")
     }
 }
+
+class ScheduleItem(
+    val startDatetime: LocalDateTime,
+    val endDateTime: LocalDateTime,
+    val isConfirmed: Boolean
+)
+
