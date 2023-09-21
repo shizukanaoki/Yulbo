@@ -8,6 +8,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -32,8 +34,16 @@ fun YulboBottomAppBar(
     navigateToCandidates: () -> Unit
 ) {
     NavigationBar {
-        NavigationBarItem(selected = true, onClick = { navigateToSchedule() }, icon = { /*TODO*/ }, label = { Text(text = "schedule") })
-        NavigationBarItem(selected = true, onClick = { navigateToCandidates() }, icon = { /*TODO*/ }, label = { Text(text = "candidates") })
+        NavigationBarItem(
+            selected = true,
+            onClick = { navigateToSchedule() },
+            icon = { Icon(Icons.Filled.DateRange, null)},
+            label = { Text(text = "schedule") })
+        NavigationBarItem(
+            selected = true,
+            onClick = { navigateToCandidates() },
+            icon = { Icon(Icons.Filled.Notifications, null)},
+            label = { Text(text = "candidates") })
     }
 }
 
