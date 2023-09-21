@@ -7,7 +7,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.yulbo.ui.screens.ScheduleItem
+import com.example.yulbo.ui.screens.CreateScreen
 import com.example.yulbo.ui.screens.ScheduleScreen
+import java.time.LocalDateTime
 
 
 @Composable
@@ -26,16 +29,31 @@ fun YulboNavHost(
             }
         }
         composable(route = "schedule") {
-            ScheduleScreen()
+            ScheduleScreen(
+                scheduleItems = listOf(
+                    ScheduleItem(
+                        startDatetime = LocalDateTime.of(2023, 8, 21, 12, 0),
+                        endDateTime = LocalDateTime.of(2023, 8, 21, 12, 0),
+                        isConfirmed = false
+                    ),
+                    ScheduleItem(
+                        startDatetime = LocalDateTime.of(2023, 8, 21, 13, 0),
+                        endDateTime = LocalDateTime.of(2023, 8, 21, 13, 0),
+                        isConfirmed = false
+                    ),
+                )
+            ){
+                navController.navigate("create")
+            }
+        }
+        composable(route = "create") {
+            CreateScreen()
         }
         composable(route = "candidates") {
             Text(text = "candidates")
         }
         composable(route = "confirm") {
             Text(text = "confirm")
-        }
-        composable(route = "create") {
-            Text(text = "create")
         }
     }
 }
