@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.yulbo.ui.screens.CreateScreen
 import com.example.yulbo.ui.screens.ScheduleScreen
 
 
@@ -26,16 +27,18 @@ fun YulboNavHost(
             }
         }
         composable(route = "schedule") {
-            ScheduleScreen()
+            ScheduleScreen{
+                navController.navigate("create")
+            }
+        }
+        composable(route = "create") {
+            CreateScreen()
         }
         composable(route = "candidates") {
             Text(text = "candidates")
         }
         composable(route = "confirm") {
             Text(text = "confirm")
-        }
-        composable(route = "create") {
-            Text(text = "create")
         }
     }
 }
