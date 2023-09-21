@@ -21,7 +21,7 @@ fun YulboNavHost(
         modifier = modifier
     ) {
         composable(route = "start") {
-            StartScreen{
+            StartScreen(modifier = modifier) {
                 navController.navigate("schedule")
             }
         }

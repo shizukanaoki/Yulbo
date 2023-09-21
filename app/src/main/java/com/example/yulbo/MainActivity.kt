@@ -36,27 +36,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(
-            text = "Yulbo",
-            modifier = modifier.padding(60.dp),
-            fontSize = 50.sp
-        )
-        Image(painter = painterResource(id = R.drawable.spacekoara), contentDescription = null,modifier = Modifier.padding(20.dp))
-        Button(
-            onClick = { /* Do something */ },
-            shape = MaterialTheme.shapes.small,
-            contentPadding = PaddingValues(top = 20.dp,bottom = 20.dp,start = 20.dp, end = 20.dp),
-            modifier = Modifier.padding(30.dp)
-        ){
-            Text(
-                text = "Start",
-                fontSize = 30.sp
-            )
-        }
-
-    }
-}
