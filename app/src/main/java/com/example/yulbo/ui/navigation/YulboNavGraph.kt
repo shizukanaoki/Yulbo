@@ -44,7 +44,9 @@ fun YulboNavHost(
             )
         }
         composable(route = "create") {
-            CreateScreen()
+            CreateScreen(
+                navigateToSchedule = {navController.navigate("schedule")}
+            )
         }
         composable(route = "candidates") {
             CandidatesScreen(
