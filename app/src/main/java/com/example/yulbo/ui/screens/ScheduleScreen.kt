@@ -43,6 +43,7 @@ fun YulboBottomAppBar(
 fun ScheduleScreen(
     modifier: Modifier = Modifier,
     scheduleItems: List<ScheduleItem>,
+    createSchedule: () -> Unit,
     navigateToCreate: () -> Unit,
 ) {
     Scaffold(
@@ -60,7 +61,9 @@ fun ScheduleScreen(
         },
         bottomBar = {
             YulboBottomAppBar(
-                navigateToCandidates = {},
+                navigateToCandidates = {
+                  createSchedule()
+                },
                 navigateToSchedule = {}
             )
         }
