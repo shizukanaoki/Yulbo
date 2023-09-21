@@ -33,13 +33,43 @@ fun YulboNavHost(
                 scheduleItems = listOf(
                     ScheduleItem(
                         startDatetime = LocalDateTime.of(2023, 8, 21, 12, 0),
-                        endDateTime = LocalDateTime.of(2023, 8, 21, 12, 0),
+                        endDateTime = LocalDateTime.of(2023, 8, 21, 13, 0),
                         isConfirmed = false
                     ),
                     ScheduleItem(
-                        startDatetime = LocalDateTime.of(2023, 8, 21, 13, 0),
+                        startDatetime = LocalDateTime.of(2023, 8, 21, 14, 0),
+                        endDateTime = LocalDateTime.of(2023, 8, 21, 15, 0),
+                        isConfirmed = true
+                    ),
+                    ScheduleItem(
+                        startDatetime = LocalDateTime.of(2023, 8, 21, 12, 0),
                         endDateTime = LocalDateTime.of(2023, 8, 21, 13, 0),
                         isConfirmed = false
+                    ),
+                    ScheduleItem(
+                        startDatetime = LocalDateTime.of(2023, 8, 21, 14, 0),
+                        endDateTime = LocalDateTime.of(2023, 8, 21, 15, 0),
+                        isConfirmed = true
+                    ),
+                    ScheduleItem(
+                        startDatetime = LocalDateTime.of(2023, 8, 21, 12, 0),
+                        endDateTime = LocalDateTime.of(2023, 8, 21, 13, 0),
+                        isConfirmed = false
+                    ),
+                    ScheduleItem(
+                        startDatetime = LocalDateTime.of(2023, 8, 21, 14, 0),
+                        endDateTime = LocalDateTime.of(2023, 8, 21, 15, 0),
+                        isConfirmed = true
+                    ),
+                    ScheduleItem(
+                        startDatetime = LocalDateTime.of(2023, 8, 21, 12, 0),
+                        endDateTime = LocalDateTime.of(2023, 8, 21, 13, 0),
+                        isConfirmed = false
+                    ),
+                    ScheduleItem(
+                        startDatetime = LocalDateTime.of(2023, 8, 21, 14, 0),
+                        endDateTime = LocalDateTime.of(2023, 8, 21, 15, 0),
+                        isConfirmed = true
                     ),
                 )
             ){
