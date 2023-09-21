@@ -9,11 +9,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.yulbo.ui.YulboViewModel
-import com.example.yulbo.ui.screens.ScheduleItem
+import com.example.yulbo.ui.screens.CandidatesScreen
 import com.example.yulbo.ui.screens.CreateScreen
 import com.example.yulbo.ui.screens.ScheduleScreen
-import java.time.LocalDateTime
-
 
 @Composable
 fun YulboNavHost(
@@ -33,19 +31,31 @@ fun YulboNavHost(
         }
         composable(route = "schedule") {
             ScheduleScreen(
-                createSchedule = {
-                    yulboViewModel.addSchedule()
+                scheduleItems = yulboViewModel.uiState.collectAsState().value.scheduleItems,
+                navigateToCreate = {
+                    navController.navigate("create")
                 },
-                scheduleItems = yulboViewModel.uiState.collectAsState().value.scheduleItems
-            ){
-                navController.navigate("create")
-            }
+                navigateToCandidates = {
+                    navController.navigate("candidates")
+                },
+                navigateToSchedule = {
+                    navController.navigate("schedule")
+                }
+            )
         }
         composable(route = "create") {
             CreateScreen()
         }
         composable(route = "candidates") {
-            Text(text = "candidates")
+            CandidatesScreen(
+                candidateItems = yulboViewModel.uiState.collectAsState().value.candidateItems,
+                navigateToCandidates = {
+                    navController.navigate("candidates")
+                },
+                navigateToSchedule = {
+                    navController.navigate("schedule")
+                }
+            )
         }
         composable(route = "confirm") {
             Text(text = "confirm")

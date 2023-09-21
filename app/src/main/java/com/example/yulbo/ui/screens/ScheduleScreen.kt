@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import java.time.LocalDateTime
+import com.example.yulbo.ui.model.ScheduleItem
 
 @Composable
 fun YulboBottomAppBar(
@@ -43,8 +43,9 @@ fun YulboBottomAppBar(
 fun ScheduleScreen(
     modifier: Modifier = Modifier,
     scheduleItems: List<ScheduleItem>,
-    createSchedule: () -> Unit,
     navigateToCreate: () -> Unit,
+    navigateToCandidates: () -> Unit,
+    navigateToSchedule: () -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -62,9 +63,11 @@ fun ScheduleScreen(
         bottomBar = {
             YulboBottomAppBar(
                 navigateToCandidates = {
-                  createSchedule()
+                    navigateToCandidates()
                 },
-                navigateToSchedule = {}
+                navigateToSchedule = {
+                    navigateToSchedule()
+                }
             )
         }
     ) { innerPadding ->
@@ -111,10 +114,3 @@ fun ScheduleScreen(
         }
     }
 }
-
-class ScheduleItem(
-    val startDatetime: LocalDateTime,
-    val endDateTime: LocalDateTime,
-    val isConfirmed: Boolean
-)
-
