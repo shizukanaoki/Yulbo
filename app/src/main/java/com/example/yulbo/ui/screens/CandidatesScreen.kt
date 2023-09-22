@@ -62,7 +62,8 @@ fun CandidatesScreen(
         val dtf = DateTimeFormatter.ofPattern("MM/dd HH:mm")
         Column(
             modifier = Modifier
-                .verticalScroll(rememberScrollState()).padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+                .padding(innerPadding)
         ) { candidateItems.forEach{ candidateItem ->
                 Row {
                     Card (modifier = Modifier
@@ -74,8 +75,9 @@ fun CandidatesScreen(
                                 .fillMaxWidth()
                                 .padding(10.dp),
                             horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text(text = candidateItem.matchedScheduleItem.userId.toString()+"さん", fontSize = 20.sp)
-                            Text(text = candidateItem.myScheduleItem.startDatetime.format(dtf)+"〜"+ candidateItem.myScheduleItem.endDateTime.format(dtf))
+                            Text(text = candidateItem.matchedScheduleItem.userId.toString()+"さんが", fontSize = 20.sp)
+                            Text(text = candidateItem.myScheduleItem.startDatetime.format(dtf)+"〜"+ candidateItem.myScheduleItem.endDateTime.format(dtf), fontSize = 20.sp)
+                            Text(text = "で「"+candidateItem.matchedScheduleItem.title+"」みたいです！")
                             Button(
                                 modifier = Modifier.padding(top = 10.dp),
                                 onClick = {

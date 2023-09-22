@@ -99,39 +99,50 @@ fun ScheduleScreen(
     ) { innerPadding ->
         Column (
             modifier = Modifier
-                .verticalScroll(rememberScrollState()).padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+                .padding(innerPadding)
         ){
             scheduleItems.forEach { scheduleItem ->
                 val cardColor: Color = if (scheduleItem.isConfirmed) {
-                    Color(0x9082b1ff)
+                    MaterialTheme.colorScheme.secondaryContainer
                 } else {
-                    Color(0x90e3f2fd)
+                    MaterialTheme.colorScheme.tertiaryContainer
                 }
                 Row {
                     Card (modifier = Modifier
                         .weight(1f)
-                        .padding(20.dp),
+                        .padding(top = 20.dp, start = 10.dp, end = 10.dp),
                         colors = CardDefaults.cardColors(
                             containerColor = cardColor
                         ),
                         shape = MaterialTheme.shapes.medium
                     ){
+                        Text(
+                            text = scheduleItem.title,
+                            fontSize = 30.sp,
+                            modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                                .padding(10.dp)
+                        )
                         val startMonth = scheduleItem.startDatetime.monthValue.toString().padStart(2, '0')
                         val startDay = scheduleItem.startDatetime.dayOfMonth.toString().padStart(2, '0')
                         val startHour = scheduleItem.startDatetime.hour.toString().padStart(2, '0')
                         val startMin = scheduleItem.startDatetime.minute.toString().padStart(2, '0')
                         Text(
                             text = "$startMonth/$startDay $startHour:$startMin",
-                            fontSize = 35.sp,
-                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                            fontSize = 30.sp,
+                            modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
                         )
                         val endMonth = scheduleItem.endDateTime.monthValue.toString().padStart(2, '0')
                         val endDay = scheduleItem.endDateTime.dayOfMonth.toString().padStart(2, '0')
                         val endHour = scheduleItem.endDateTime.hour.toString().padStart(2, '0')
                         val endMin = scheduleItem.endDateTime.minute.toString().padStart(2, '0')
                         Text(text = "〜$endMonth/$endDay $endHour:$endMin",
-                            fontSize = 35.sp,
-                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                            fontSize = 30.sp,
+                            modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                                .padding(bottom = 10.dp)
                         )
                     }
                 }
