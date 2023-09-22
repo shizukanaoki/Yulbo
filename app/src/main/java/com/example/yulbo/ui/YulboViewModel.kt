@@ -79,6 +79,7 @@ class YulboViewModel : ViewModel() {
 
         // uiState を更新して画面の見た目を変える
         _uiState.value.scheduleItems = findMyScheduleItems()
+        _uiState.value.candidateItems  = calculateCandidateItems()
     }
 
     fun findCandidateItem(myScheduleItemId: String, matchedScheduleItemId: String): CandidateItem {
@@ -99,8 +100,12 @@ class YulboViewModel : ViewModel() {
     }
 
     private fun calculateCandidateItems(): List<CandidateItem> {
-        val othersScheduleItems = scheduleItems.filter { scheduleItem -> scheduleItem.userId ==2 }
-        val myScheduleItems = scheduleItems.filter { scheduleItem -> scheduleItem.userId == 1 }
+        val othersScheduleItems = scheduleItems.filter { scheduleItem ->
+            scheduleItem.userId != 1 && !scheduleItem.isConfirmed
+        }
+        val myScheduleItems = scheduleItems.filter { scheduleItem ->
+            scheduleItem.userId == 1 && !scheduleItem.isConfirmed
+        }
         val result = mutableListOf<CandidateItem>();
         othersScheduleItems.forEach { othersScheduleItem ->
             myScheduleItems.forEach {myScheduleItem ->
@@ -115,15 +120,8 @@ class YulboViewModel : ViewModel() {
                     result.add(candidateItem)
                 }
             }
-            return result
         }
-
-        return listOf(
-            CandidateItem(
-                myScheduleItem = scheduleItems[0],
-                matchedScheduleItem = scheduleItems[2]
-            )
-        )
+        return result
     }
 }
 
