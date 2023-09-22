@@ -55,7 +55,16 @@ class YulboViewModel : ViewModel() {
         eminute: Int,
         title: String
     ) {
-        // todo: implement logic
+        val newScheduleItem = ScheduleItem(
+            id = UUID.randomUUID().toString(),
+            userId = 1,
+            startDatetime = LocalDateTime.of(2023, smonth, sday, shour, sminute),
+            endDateTime = LocalDateTime.of(2023, emonth ,eday, ehour, eminute),
+            title = title,
+            isConfirmed = false
+        )
+        scheduleItems.add(newScheduleItem)
+        _uiState.value.scheduleItems = findMyScheduleItems()
     }
 
     private fun findMyScheduleItems(): List<ScheduleItem> {
