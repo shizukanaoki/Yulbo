@@ -1,5 +1,6 @@
 package com.example.yulbo.ui
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.yulbo.ui.model.CandidateItem
 import com.example.yulbo.ui.model.ScheduleItem
@@ -65,6 +66,23 @@ class YulboViewModel : ViewModel() {
         )
         scheduleItems.add(newScheduleItem)
         _uiState.value.scheduleItems = findMyScheduleItems()
+    }
+
+    fun confirmSchedule(myScheduleItemId: String, matchedScheduleItemId: String) {
+        Log.d("confirmSchedule", "myScheduleItemId: ${myScheduleItemId}, matchedScheduleItemId: ${matchedScheduleItemId}")
+    }
+
+    fun findCandidateItem(myScheduleItemId: String, matchedScheduleItemId: String): CandidateItem {
+        val myScheduleItem = scheduleItems.find { scheduleItem -> scheduleItem.id ==  myScheduleItemId}
+        val matchedScheduleItem = scheduleItems.find { scheduleItem -> scheduleItem.id ==  matchedScheduleItemId}
+        if (myScheduleItem == null || matchedScheduleItem == null) {
+            throw IllegalArgumentException("myScheduleItem or matchedScheduleItem is not found")
+        } else {
+            return CandidateItem(
+                myScheduleItem = myScheduleItem,
+                matchedScheduleItem = matchedScheduleItem,
+            )
+        }
     }
 
     private fun findMyScheduleItems(): List<ScheduleItem> {

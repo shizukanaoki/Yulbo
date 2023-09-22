@@ -26,7 +26,7 @@ fun CandidatesScreen(
     candidateItems: List<CandidateItem>,
     navigateToSchedule: () -> Unit,
     navigateToCandidates: () -> Unit,
-    navigateToCandidateDetails: (String) -> Unit
+    navigateToCandidateDetails: (String, String) -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -58,7 +58,13 @@ fun CandidatesScreen(
                             Text(text = candidateItem.myScheduleItem.startDatetime.format(dtf)+"〜"+ candidateItem.myScheduleItem.endDateTime.format(dtf))
                             Button(
                                 modifier = Modifier.padding(top = 10.dp),
-                                onClick = {navigateToCandidateDetails(candidateItem.matchedScheduleItem.id)}) {
+                                onClick = {
+                                    navigateToCandidateDetails(
+                                        candidateItem.myScheduleItem.id,
+                                        candidateItem.matchedScheduleItem.id
+                                    )
+                                }
+                            ) {
                                 Text(text = "詳細")
                             }
                         }

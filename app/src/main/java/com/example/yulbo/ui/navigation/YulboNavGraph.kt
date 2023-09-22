@@ -65,25 +65,34 @@ fun YulboNavHost(
                 navigateToSchedule = {
                     navController.navigate("schedule")
                 },
-                navigateToCandidateDetails = {
-                    navController.navigate("candidate_details/${it}")
+                navigateToCandidateDetails = { myScheduleItemId, matchedScheduleItemId ->
+                    navController.navigate("candidate_details/${myScheduleItemId}/${matchedScheduleItemId}")
                 }
 
             )
         }
         composable(
-            route = "candidate_details/{itemId}",
-            arguments = listOf(navArgument("itemId") {
-                type = NavType.StringType
-            })
+            route = "candidate_details/{myScheduleItemId}/{matchedScheduleItemId}",
+            arguments = listOf(
+                navArgument("myScheduleItemId") {
+                    type = NavType.StringType
+                },
+                navArgument("matchedScheduleItemId") {
+                    type = NavType.StringType
+                }
+            )
         ) { backStackEntry ->
-            val itemId = backStackEntry.arguments?.getString("itemId")
-            if (itemId == null) {
+            val myScheduleItemId = backStackEntry.arguments?.getString("myScheduleItemId")
+            val matchedScheduleItemId = backStackEntry.arguments?.getString("matchedScheduleItemId")
+            if (myScheduleItemId == null || matchedScheduleItemId == null) {
                 Text(text = "invalid itemId")
             } else {
                 CandidateDetailsScreen(
-                    itemId = itemId,
-                    navigateToSchedule = { navController.navigate("schedule") }
+                    candidateItem = yulboViewModel.findCandidateItem(myScheduleItemId, matchedScheduleItemId),
+                    confirmSchedule = { myScheduleItemId, matchedScheduleItemId ->
+                        yulboViewModel.confirmSchedule(myScheduleItemId, matchedScheduleItemId)
+                    } ,
+                    navigateToCandidates = { navController.navigate("candidates") },
                 )
             }
         }
