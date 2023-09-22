@@ -1,8 +1,10 @@
 package com.example.yulbo.ui.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -65,30 +67,46 @@ fun CandidatesScreen(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .padding(innerPadding)
-        ) { candidateItems.forEach{ candidateItem ->
-                Row {
-                    Card (modifier = Modifier
-                        .weight(1f)
-                        .padding(20.dp)
-                    ){
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(10.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text(text = candidateItem.matchedScheduleItem.userId.toString()+"さん" , fontWeight = FontWeight.ExtraBold,fontSize = 20.sp)
-                            Text(text = candidateItem.myScheduleItem.startDatetime.format(dtf)+"〜"+ candidateItem.myScheduleItem.endDateTime.format(dtf), fontSize = 20.sp)
-                            Text(text = "で「"+candidateItem.matchedScheduleItem.title+"みたいです！")
-                            Button(
-                                modifier = Modifier.padding(top = 10.dp),
-                                onClick = {
-                                    navigateToCandidateDetails(
-                                        candidateItem.myScheduleItem.id,
-                                        candidateItem.matchedScheduleItem.id
-                                    )
+        ) {
+            if (candidateItems.isEmpty()) {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Text(
+                        text = "まだ候補日はありません。\n気長に待ってみましょう！",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp,
+                        modifier = Modifier.padding(top = 20.dp)
+                    )
+                }
+            } else {
+                candidateItems.forEach{ candidateItem ->
+                    Row {
+                        Card (modifier = Modifier
+                            .weight(1f)
+                            .padding(20.dp)
+                        ){
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(10.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally) {
+                                Text(text = candidateItem.matchedScheduleItem.userId.toString()+"さん" , fontWeight = FontWeight.ExtraBold,fontSize = 20.sp)
+                                Text(text = candidateItem.myScheduleItem.startDatetime.format(dtf)+"〜"+ candidateItem.myScheduleItem.endDateTime.format(dtf), fontSize = 20.sp)
+                                Text(text = "で「"+candidateItem.matchedScheduleItem.title+"みたいです！")
+                                Button(
+                                    modifier = Modifier.padding(top = 10.dp),
+                                    onClick = {
+                                        navigateToCandidateDetails(
+                                            candidateItem.myScheduleItem.id,
+                                            candidateItem.matchedScheduleItem.id
+                                        )
+                                    }
+                                ) {
+                                    Text(text = "詳細")
                                 }
-                            ) {
-                                Text(text = "詳細")
                             }
                         }
                     }
