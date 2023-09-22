@@ -20,7 +20,7 @@ fun CandidatesScreen(
     candidateItems: List<CandidateItem>,
     navigateToSchedule: () -> Unit,
     navigateToCandidates: () -> Unit,
-    navigateToCandidateDetails: (String) -> Unit
+    navigateToCandidateDetails: (String, String) -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -42,7 +42,10 @@ fun CandidatesScreen(
                     Card {
                         Text(text = candidateItem.matchedScheduleItem.title)
                         Text(text = candidateItem.myScheduleItem.title)
-                        Button(onClick = {navigateToCandidateDetails(candidateItem.matchedScheduleItem.id)}) {
+                        Button(onClick = {navigateToCandidateDetails(
+                            candidateItem.myScheduleItem.id,
+                            candidateItem.matchedScheduleItem.id
+                        )}) {
                             Text(text = "詳細")
                         }
                     }

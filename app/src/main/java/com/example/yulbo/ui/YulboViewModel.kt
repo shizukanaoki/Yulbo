@@ -67,6 +67,19 @@ class YulboViewModel : ViewModel() {
         _uiState.value.scheduleItems = findMyScheduleItems()
     }
 
+    fun findCandidateItem(myScheduleItemId: String, matchedScheduleItemId: String): CandidateItem {
+        val myScheduleItem = scheduleItems.find { scheduleItem -> scheduleItem.id ==  myScheduleItemId}
+        val matchedScheduleItem = scheduleItems.find { scheduleItem -> scheduleItem.id ==  matchedScheduleItemId}
+        if (myScheduleItem == null || matchedScheduleItem == null) {
+            throw IllegalArgumentException("myScheduleItem or matchedScheduleItem is not found")
+        } else {
+            return CandidateItem(
+                myScheduleItem = myScheduleItem,
+                matchedScheduleItem = matchedScheduleItem,
+            )
+        }
+    }
+
     private fun findMyScheduleItems(): List<ScheduleItem> {
         return scheduleItems.filter { scheduleItem -> scheduleItem.userId == 1 }
     }
