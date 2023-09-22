@@ -62,7 +62,7 @@ fun CreateScreen(
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 title = {
-                    Text("Yulboを作成")
+                    Text("スケジュールを作成")
                 },
                 navigationIcon = {
                     IconButton(onClick = { navigateToSchedule() }) {
