@@ -20,6 +20,8 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,6 +62,18 @@ fun ScheduleScreen(
 ) {
     Scaffold(
         modifier = modifier,
+        topBar = {
+            TopAppBar(
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                ),
+                title = {
+                    Text("登録中のスケジュール")
+                },
+
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { navigateToCreate() },
@@ -85,14 +99,13 @@ fun ScheduleScreen(
     ) { innerPadding ->
         Column (
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(rememberScrollState()).padding(innerPadding)
         ){
             scheduleItems.forEach { scheduleItem ->
-                var cardColor: Color
-                if (scheduleItem.isConfirmed) {
-                    cardColor = Color(0x9082b1ff)
+                val cardColor: Color = if (scheduleItem.isConfirmed) {
+                    Color(0x9082b1ff)
                 } else {
-                    cardColor = Color(0x90e3f2fd)
+                    Color(0x90e3f2fd)
                 }
                 Row {
                     Card (modifier = Modifier
@@ -108,7 +121,7 @@ fun ScheduleScreen(
                         val startHour = scheduleItem.startDatetime.hour.toString().padStart(2, '0')
                         val startMin = scheduleItem.startDatetime.minute.toString().padStart(2, '0')
                         Text(
-                            text = "$startMonth" + "/" + "$startDay" + " " +"$startHour" + ":" + "$startMin",
+                            text = "$startMonth/$startDay $startHour:$startMin",
                             fontSize = 35.sp,
                             modifier = Modifier.align(Alignment.CenterHorizontally)
                         )
@@ -116,7 +129,7 @@ fun ScheduleScreen(
                         val endDay = scheduleItem.endDateTime.dayOfMonth.toString().padStart(2, '0')
                         val endHour = scheduleItem.endDateTime.hour.toString().padStart(2, '0')
                         val endMin = scheduleItem.endDateTime.minute.toString().padStart(2, '0')
-                        Text(text = "〜"+"$endMonth"+"/"+"$endDay"+" "+"$endHour"+":"+"$endMin",
+                        Text(text = "〜$endMonth/$endDay $endHour:$endMin",
                             fontSize = 35.sp,
                             modifier = Modifier.align(Alignment.CenterHorizontally)
                         )
