@@ -94,7 +94,7 @@ class YulboViewModel : ViewModel() {
         val myScheduleItems = scheduleItems.filter { scheduleItem -> scheduleItem.userId == 1 }
         val result = mutableListOf<CandidateItem>();
         othersScheduleItems.forEach { othersScheduleItem ->
-            myScheduleItems.forEach {myScheduleItem ->
+            myScheduleItems.forEach { myScheduleItem ->
                 if (
                     othersScheduleItem.startDatetime == myScheduleItem.startDatetime &&
                     othersScheduleItem.endDateTime == myScheduleItem.endDateTime
@@ -106,15 +106,8 @@ class YulboViewModel : ViewModel() {
                     result.add(candidateItem)
                 }
             }
-            return result
         }
-
-        return listOf(
-            CandidateItem(
-                myScheduleItem = scheduleItems[0],
-                matchedScheduleItem = scheduleItems[2]
-            )
-        )
+        return result
     }
 }
 
