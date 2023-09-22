@@ -16,27 +16,36 @@ class YulboViewModel : ViewModel() {
         ScheduleItem(
             id = UUID.randomUUID().toString(),
             userId = 1,
-            startDatetime = LocalDateTime.of(2023, 8, 21, 12, 0),
-            endDateTime = LocalDateTime.of(2023, 8, 21, 13, 0),
+            startDatetime = LocalDateTime.of(2023, 8, 22, 19, 0),
+            endDateTime = LocalDateTime.of(2023, 8, 22, 20, 0),
             title = "飲み募",
             isConfirmed = false
         ),
         ScheduleItem(
             id = UUID.randomUUID().toString(),
             userId = 1,
-            startDatetime = LocalDateTime.of(2023, 8, 21, 14, 0),
-            endDateTime = LocalDateTime.of(2023, 8, 21, 15, 0),
+            startDatetime = LocalDateTime.of(2023, 8, 22, 20, 0),
+            endDateTime = LocalDateTime.of(2023, 8, 22, 21, 0),
             title = "沖縄行きたい",
             isConfirmed = false
         ),
         ScheduleItem(
             id = UUID.randomUUID().toString(),
             userId = 2,
-            startDatetime = LocalDateTime.of(2023, 8, 21, 14, 0),
-            endDateTime = LocalDateTime.of(2023, 8, 21, 15, 0),
+            startDatetime = LocalDateTime.of(2023, 8,  22, 20, 0),
+            endDateTime = LocalDateTime.of(2023, 8, 22, 21, 0),
             title = "南の島に行きたい",
             isConfirmed = false
+        ),
+        ScheduleItem(
+            id = UUID.randomUUID().toString(),
+            userId = 3,
+            startDatetime = LocalDateTime.of(2023, 8, 22, 21, 0),
+            endDateTime = LocalDateTime.of(2023, 8, 22, 22, 0),
+            title = "Android 開発したい",
+            isConfirmed = false
         )
+
     )
 
     private val _uiState = MutableStateFlow(YulboUiState(
@@ -66,18 +75,14 @@ class YulboViewModel : ViewModel() {
         )
         scheduleItems.add(newScheduleItem)
         _uiState.value.scheduleItems = findMyScheduleItems()
+        _uiState.value.candidateItems = calculateCandidateItems()
     }
 
     fun confirmSchedule(myScheduleItemId: String, matchedScheduleItemId: String) {
-        Log.d("confirmSchedule", "myScheduleItemId: ${myScheduleItemId}, matchedScheduleItemId: ${matchedScheduleItemId}")
-        // scheduleitems から該当のscheduleitem を取得して　is confirmed を　true にする
-
         val myScheduleItem = scheduleItems.find { scheduleItem -> scheduleItem.id == myScheduleItemId }
         val matchedScheduleItem = scheduleItems.find { scheduleItem -> scheduleItem.id == matchedScheduleItemId }
         myScheduleItem?.isConfirmed = true
         matchedScheduleItem?.isConfirmed = true
-
-        // uiState を更新して画面の見た目を変える
         _uiState.value.scheduleItems = findMyScheduleItems()
         _uiState.value.candidateItems  = calculateCandidateItems()
     }
