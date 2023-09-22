@@ -70,6 +70,16 @@ class YulboViewModel : ViewModel() {
 
     fun confirmSchedule(myScheduleItemId: String, matchedScheduleItemId: String) {
         Log.d("confirmSchedule", "myScheduleItemId: ${myScheduleItemId}, matchedScheduleItemId: ${matchedScheduleItemId}")
+        // scheduleitems から該当のscheduleitem を取得して　is confirmed を　true にする
+
+        val myScheduleItem = scheduleItems.find { scheduleItem -> scheduleItem.id == myScheduleItemId }
+        val matchedScheduleItem = scheduleItems.find { scheduleItem -> scheduleItem.id == matchedScheduleItemId }
+        myScheduleItem?.isConfirmed = true
+        matchedScheduleItem?.isConfirmed = true
+
+        // uiState を更新して画面の見た目を変える
+        _uiState.value.scheduleItems = findMyScheduleItems()
+        _uiState.value.candidateItems  = calculateCandidateItems()
     }
 
     fun findCandidateItem(myScheduleItemId: String, matchedScheduleItemId: String): CandidateItem {
@@ -90,8 +100,12 @@ class YulboViewModel : ViewModel() {
     }
 
     private fun calculateCandidateItems(): List<CandidateItem> {
-        val othersScheduleItems = scheduleItems.filter { scheduleItem -> scheduleItem.userId ==2 }
-        val myScheduleItems = scheduleItems.filter { scheduleItem -> scheduleItem.userId == 1 }
+        val othersScheduleItems = scheduleItems.filter { scheduleItem ->
+            scheduleItem.userId != 1 && !scheduleItem.isConfirmed
+        }
+        val myScheduleItems = scheduleItems.filter { scheduleItem ->
+            scheduleItem.userId == 1 && !scheduleItem.isConfirmed
+        }
         val result = mutableListOf<CandidateItem>();
         othersScheduleItems.forEach { othersScheduleItem ->
             myScheduleItems.forEach { myScheduleItem ->

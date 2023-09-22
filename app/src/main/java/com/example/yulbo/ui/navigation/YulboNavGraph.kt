@@ -91,6 +91,7 @@ fun YulboNavHost(
                     candidateItem = yulboViewModel.findCandidateItem(myScheduleItemId, matchedScheduleItemId),
                     confirmSchedule = { myScheduleItemId, matchedScheduleItemId ->
                         yulboViewModel.confirmSchedule(myScheduleItemId, matchedScheduleItemId)
+                        navController.navigate("schedule")
                     } ,
                     navigateToCandidates = { navController.navigate("candidates") },
                 )

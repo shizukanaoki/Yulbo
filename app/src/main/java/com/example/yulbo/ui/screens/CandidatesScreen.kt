@@ -5,11 +5,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,6 +35,18 @@ fun CandidatesScreen(
 ) {
     Scaffold(
         modifier = modifier,
+        topBar = {
+            TopAppBar(
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                ),
+                title = {
+                    Text("マッチ候補")
+                },
+
+                )
+        },
         bottomBar = {
             YulboBottomAppBar(
                 navigateToCandidates = {
@@ -41,9 +58,13 @@ fun CandidatesScreen(
                 activeItem = "candidates"
             )
         }
-    ){ paddingContext ->
+    ){ innerPadding ->
         val dtf = DateTimeFormatter.ofPattern("MM/dd HH:mm")
-        Column { candidateItems.forEach{ candidateItem ->
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .padding(innerPadding)
+        ) { candidateItems.forEach{ candidateItem ->
                 Row {
                     Card (modifier = Modifier
                         .weight(1f)
@@ -54,8 +75,9 @@ fun CandidatesScreen(
                                 .fillMaxWidth()
                                 .padding(10.dp),
                             horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text(text = candidateItem.matchedScheduleItem.userId.toString()+"さん", fontSize = 20.sp)
-                            Text(text = candidateItem.myScheduleItem.startDatetime.format(dtf)+"〜"+ candidateItem.myScheduleItem.endDateTime.format(dtf))
+                            Text(text = candidateItem.matchedScheduleItem.userId.toString()+"さんが", fontSize = 20.sp)
+                            Text(text = candidateItem.myScheduleItem.startDatetime.format(dtf)+"〜"+ candidateItem.myScheduleItem.endDateTime.format(dtf), fontSize = 20.sp)
+                            Text(text = "で「"+candidateItem.matchedScheduleItem.title+"」みたいです！")
                             Button(
                                 modifier = Modifier.padding(top = 10.dp),
                                 onClick = {
