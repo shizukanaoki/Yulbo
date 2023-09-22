@@ -70,6 +70,15 @@ class YulboViewModel : ViewModel() {
 
     fun confirmSchedule(myScheduleItemId: String, matchedScheduleItemId: String) {
         Log.d("confirmSchedule", "myScheduleItemId: ${myScheduleItemId}, matchedScheduleItemId: ${matchedScheduleItemId}")
+        // scheduleitems から該当のscheduleitem を取得して　is confirmed を　true にする
+
+        val myScheduleItem = scheduleItems.find { scheduleItem -> scheduleItem.id == myScheduleItemId }
+        val matchedScheduleItem = scheduleItems.find { scheduleItem -> scheduleItem.id == matchedScheduleItemId }
+        myScheduleItem?.isConfirmed = true
+        matchedScheduleItem?.isConfirmed = true
+
+        // uiState を更新して画面の見た目を変える
+        _uiState.value.scheduleItems = findMyScheduleItems()
     }
 
     fun findCandidateItem(myScheduleItemId: String, matchedScheduleItemId: String): CandidateItem {

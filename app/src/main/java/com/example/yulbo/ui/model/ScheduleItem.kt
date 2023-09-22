@@ -8,5 +8,5 @@ class ScheduleItem(
     val title: String,
     val startDatetime: LocalDateTime,
     val endDateTime: LocalDateTime,
-    val isConfirmed: Boolean
+    var isConfirmed: Boolean
 )
