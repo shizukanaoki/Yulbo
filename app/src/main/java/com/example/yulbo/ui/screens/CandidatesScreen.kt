@@ -18,6 +18,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.yulbo.ui.model.CandidateItem
@@ -75,9 +76,9 @@ fun CandidatesScreen(
                                 .fillMaxWidth()
                                 .padding(10.dp),
                             horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text(text = candidateItem.matchedScheduleItem.userId.toString()+"さんが", fontSize = 20.sp)
+                            Text(text = candidateItem.matchedScheduleItem.userId.toString()+"さん" , fontWeight = FontWeight.ExtraBold,fontSize = 20.sp)
                             Text(text = candidateItem.myScheduleItem.startDatetime.format(dtf)+"〜"+ candidateItem.myScheduleItem.endDateTime.format(dtf), fontSize = 20.sp)
-                            Text(text = "で「"+candidateItem.matchedScheduleItem.title+"」みたいです！")
+                            Text(text = "で「"+candidateItem.matchedScheduleItem.title+"みたいです！")
                             Button(
                                 modifier = Modifier.padding(top = 10.dp),
                                 onClick = {

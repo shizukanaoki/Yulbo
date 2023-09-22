@@ -24,7 +24,7 @@ fun YulboNavHost(
     val yulboViewModel: YulboViewModel = YulboViewModel()
     NavHost(
         navController = navController,
-        startDestination = "schedule",
+        startDestination = "start",
         modifier = modifier
     ) {
         composable(route = "start") {

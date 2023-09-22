@@ -1,6 +1,8 @@
 package com.example.yulbo.ui.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -26,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.yulbo.ui.model.ScheduleItem
@@ -106,7 +109,7 @@ fun ScheduleScreen(
                 val cardColor: Color = if (scheduleItem.isConfirmed) {
                     MaterialTheme.colorScheme.secondaryContainer
                 } else {
-                    MaterialTheme.colorScheme.tertiaryContainer
+                    Color(0x00000000)
                 }
                 Row {
                     Card (modifier = Modifier
@@ -115,15 +118,19 @@ fun ScheduleScreen(
                         colors = CardDefaults.cardColors(
                             containerColor = cardColor
                         ),
+                        border = BorderStroke(3.dp, MaterialTheme.colorScheme.secondaryContainer),
                         shape = MaterialTheme.shapes.medium
                     ){
+
                         Text(
                             text = scheduleItem.title,
                             fontSize = 30.sp,
+                            fontWeight = FontWeight.ExtraBold,
                             modifier = Modifier
                                 .align(Alignment.CenterHorizontally)
                                 .padding(10.dp)
                         )
+
                         val startMonth = scheduleItem.startDatetime.monthValue.toString().padStart(2, '0')
                         val startDay = scheduleItem.startDatetime.dayOfMonth.toString().padStart(2, '0')
                         val startHour = scheduleItem.startDatetime.hour.toString().padStart(2, '0')
