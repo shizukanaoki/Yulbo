@@ -11,12 +11,17 @@ import com.example.yulbo.ui.model.CandidateItem
 @Composable
 fun CandidateDetailsScreen(
     candidateItem: CandidateItem,
-    confirmSchedule: () -> Unit,
+    confirmSchedule: (String, String) -> Unit,
     navigateToCandidates: () -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         Text(text = candidateItem.myScheduleItem.title)
-        Button(onClick = {confirmSchedule}) {
+        Button(onClick = {
+            confirmSchedule(
+                candidateItem.myScheduleItem.id,
+                candidateItem.matchedScheduleItem.id
+            )
+        }) {
             Text(text = "確定")
         }
         Button(onClick = {navigateToCandidates()}) {

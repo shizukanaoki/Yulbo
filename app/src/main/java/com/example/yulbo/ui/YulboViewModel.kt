@@ -1,5 +1,6 @@
 package com.example.yulbo.ui
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.yulbo.ui.model.CandidateItem
 import com.example.yulbo.ui.model.ScheduleItem
@@ -65,6 +66,10 @@ class YulboViewModel : ViewModel() {
         )
         scheduleItems.add(newScheduleItem)
         _uiState.value.scheduleItems = findMyScheduleItems()
+    }
+
+    fun confirmSchedule(myScheduleItemId: String, matchedScheduleItemId: String) {
+        Log.d("confirmSchedule", "myScheduleItemId: ${myScheduleItemId}, matchedScheduleItemId: ${matchedScheduleItemId}")
     }
 
     fun findCandidateItem(myScheduleItemId: String, matchedScheduleItemId: String): CandidateItem {
