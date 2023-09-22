@@ -6,11 +6,18 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,8 +54,33 @@ fun CreateScreen(
     var eday by remember { mutableStateOf("") }
     var ehour by remember { mutableStateOf("") }
     var emini by remember { mutableStateOf("") }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                ),
+                title = {
+                    Text("スケジュールを作成")
+                },
+                navigationIcon = {
+                    IconButton(onClick = { navigateToSchedule() }) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = "Localized description"
+                        )
+                    }
+                },
+            )
+        },
+    ) { innerPadding ->
+
+
     Column (
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(innerPadding),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         OutlinedTextField(
@@ -58,42 +90,42 @@ fun CreateScreen(
             modifier = Modifier.padding(50.dp)
         )
         Text(text = "開始時刻", fontSize = 25.sp)
-        Row (){
+        Row {
             OutlinedTextField(
                 value = smonth,
-                onValueChange = { smonth = it},
-                label = { Text(text = "月")},
+                onValueChange = { smonth = it },
+                label = { Text(text = "月") },
                 modifier = Modifier
                     .width(70.dp)
                     .padding(5.dp)
             )
             OutlinedTextField(
                 value = sday,
-                onValueChange = { sday = it},
-                label = { Text(text = "日")},
+                onValueChange = { sday = it },
+                label = { Text(text = "日") },
                 modifier = Modifier
                     .width(70.dp)
                     .padding(5.dp)
             )
             OutlinedTextField(
                 value = shour,
-                onValueChange = { shour = it},
-                label = { Text(text = "時")},
+                onValueChange = { shour = it },
+                label = { Text(text = "時") },
                 modifier = Modifier
                     .width(70.dp)
                     .padding(5.dp)
             )
             OutlinedTextField(
                 value = smini,
-                onValueChange = { smini = it},
-                label = { Text(text = "分")},
+                onValueChange = { smini = it },
+                label = { Text(text = "分") },
                 modifier = Modifier
                     .width(70.dp)
                     .padding(5.dp)
             )
         }
         Text(text = "終了時刻", fontSize = 25.sp)
-        Row (){
+        Row {
             OutlinedTextField(
                 value = emonth,
                 onValueChange = { emonth = it },
@@ -152,5 +184,6 @@ fun CreateScreen(
                 modifier = Modifier.padding(10.dp)
             )
         }
+    }
     }
 }
