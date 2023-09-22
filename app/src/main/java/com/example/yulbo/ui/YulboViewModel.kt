@@ -72,7 +72,25 @@ class YulboViewModel : ViewModel() {
     }
 
     private fun calculateCandidateItems(): List<CandidateItem> {
-        // todo: implement logic
+        val othersScheduleItems = scheduleItems.filter { scheduleItem -> scheduleItem.userId ==2 }
+        val myScheduleItems = scheduleItems.filter { scheduleItem -> scheduleItem.userId == 1 }
+        val result = mutableListOf<CandidateItem>();
+        othersScheduleItems.forEach { othersScheduleItem ->
+            myScheduleItems.forEach {myScheduleItem ->
+                if (
+                    othersScheduleItem.startDatetime == myScheduleItem.startDatetime &&
+                    othersScheduleItem.endDateTime == myScheduleItem.endDateTime
+                ) {
+                    val candidateItem = CandidateItem(
+                        myScheduleItem = myScheduleItem,
+                        matchedScheduleItem = othersScheduleItem
+                    )
+                    result.add(candidateItem)
+                }
+            }
+            return result
+        }
+
         return listOf(
             CandidateItem(
                 myScheduleItem = scheduleItems[0],
